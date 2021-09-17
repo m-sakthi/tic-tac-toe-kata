@@ -11,3 +11,35 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+button {
+  font-size: 16px;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.board {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 240px;
+  height: 240px;
+  padding: 4px;
+  border: 1px solid #fafafa;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.square {
+  width: 80px;
+  height: 80px;
+  border-radius: 4px;
+}
+
+.reset-btn {
+  margin-top: 20px;
+  padding: 8px 20px;
+  font-weight: 500;
+}
