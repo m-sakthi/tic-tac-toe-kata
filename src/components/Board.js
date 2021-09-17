@@ -29,7 +29,8 @@ const hasPlayerMatchedWinningIndices = (squares) => {
 }
 
 const Board = () => {
-  const [squares, setSquares] = useState(Array(9).fill(null));
+  const initalSquares = Array(9).fill(null);
+  const [squares, setSquares] = useState(initalSquares);
   const [isXCurrentPlayer, setIsXCurrentPlayer] = useState(true);
   const [result, setResult] = useState(null);
 
@@ -46,6 +47,11 @@ const Board = () => {
   }
 
   const currentPlayer = () => isXCurrentPlayer ? 'X' : 'O';
+
+  const resetGame = () => {
+    setSquares(initalSquares);
+    setIsXCurrentPlayer(true);
+  }
 
   return (
     <div className="container">
@@ -66,7 +72,11 @@ const Board = () => {
             `Player to Play: ${currentPlayer()}`
         }
       </div>
-      <button data-testid="reset-btn" className="reset-btn">
+      <button
+        data-testid="reset-btn"
+        className="reset-btn"
+        onClick={resetGame}
+      >
         Reset Game
       </button>
     </div>

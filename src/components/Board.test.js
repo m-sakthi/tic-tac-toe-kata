@@ -115,6 +115,24 @@ describe('Board component', () => {
     squareOnClickExpectation(5, X);
     expectScreenToHave(TIED);
   });
+
+  it('should reset the game when reset button is clicked', () => {
+    squareOnClickExpectation(0, X);
+    expectScreenToHave(NEXT_PLAYER_O);
+
+    const resetBtn = board.getByTestId('reset-btn');
+
+    fireEvent.click(resetBtn);
+
+    const squares = board.getAllByTestId(/square/);
+
+    expect(squares.length).toBe(9);
+    expectScreenToHave(NEXT_PLAYER_X);
+
+    [X, O].forEach((i) => {
+      expect(board.queryAllByText(i).length).toBe(0);
+    });
+  });
 });
 
 const squareOnClickExpectation = (id, expectedTxt) => {
