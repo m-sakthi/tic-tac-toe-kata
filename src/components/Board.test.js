@@ -6,6 +6,8 @@ const X = 'X';
 const O = 'O';
 const NEXT_PLAYER_X = /Player to Play: X/;
 const NEXT_PLAYER_O = /Player to Play: O/;
+const WINNER_X = /Winner: X/;
+const WINNER_O = /Winner: O/;
 
 describe('Board component', () => {
 
@@ -45,6 +47,43 @@ describe('Board component', () => {
 
     squareOnClickExpectation(1, X);
     expectScreenToHave(NEXT_PLAYER_O);
+  });
+
+  it('should show winner if any one of the player has won by matching X', () => {
+    squareOnClickExpectation(0, X);
+    expectScreenToHave(NEXT_PLAYER_O);
+
+    squareOnClickExpectation(3, O);
+    expectScreenToHave(NEXT_PLAYER_X);
+
+    squareOnClickExpectation(1, X);
+    expectScreenToHave(NEXT_PLAYER_O);
+
+    squareOnClickExpectation(4, O);
+    expectScreenToHave(NEXT_PLAYER_X);
+
+    squareOnClickExpectation(2, X);
+    expectScreenToHave(WINNER_X);
+  });
+
+  it('should show winner if any one of the player has won by matching O', () => {
+    squareOnClickExpectation(0, X);
+    expectScreenToHave(NEXT_PLAYER_O);
+
+    squareOnClickExpectation(3, O);
+    expectScreenToHave(NEXT_PLAYER_X);
+
+    squareOnClickExpectation(1, X);
+    expectScreenToHave(NEXT_PLAYER_O);
+
+    squareOnClickExpectation(4, O);
+    expectScreenToHave(NEXT_PLAYER_X);
+
+    squareOnClickExpectation(6, X);
+    expectScreenToHave(NEXT_PLAYER_O);
+
+    squareOnClickExpectation(5, O);
+    expectScreenToHave(WINNER_O);
   });
 });
 
