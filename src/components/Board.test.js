@@ -38,6 +38,14 @@ describe('Board component', () => {
     squareOnClickExpectation(2, O);
     expectScreenToHave(NEXT_PLAYER_X);
   })
+
+  it('should not change value if same square is clicked twice', () => {
+    squareOnClickExpectation(1, X);
+    expectScreenToHave(NEXT_PLAYER_O);
+
+    squareOnClickExpectation(1, X);
+    expectScreenToHave(NEXT_PLAYER_O);
+  });
 });
 
 const squareOnClickExpectation = (id, expectedTxt) => {

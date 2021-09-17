@@ -7,10 +7,13 @@ const Board = () => {
 
   const squareOnClickHandler = (i) => () => {
     const newSquares = squares;
-    newSquares[i] = currentPlayer();
 
-    setSquares(newSquares);
-    setIsXCurrentPlayer(!isXCurrentPlayer);
+    if (!newSquares[i]) {
+      newSquares[i] = currentPlayer();
+
+      setSquares(newSquares);
+      setIsXCurrentPlayer(!isXCurrentPlayer);
+    }
   }
 
   const currentPlayer = () => isXCurrentPlayer ? 'X' : 'O';
