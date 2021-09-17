@@ -8,6 +8,7 @@ const NEXT_PLAYER_X = /Player to Play: X/;
 const NEXT_PLAYER_O = /Player to Play: O/;
 const WINNER_X = /Winner: X/;
 const WINNER_O = /Winner: O/;
+const TIED = /Match Tied/;
 
 describe('Board component', () => {
 
@@ -84,6 +85,35 @@ describe('Board component', () => {
 
     squareOnClickExpectation(5, O);
     expectScreenToHave(WINNER_O);
+  });
+
+  it('should show match tied if winning indices are not matched for by both players', () => {
+    squareOnClickExpectation(0, X);
+    expectScreenToHave(NEXT_PLAYER_O);
+
+    squareOnClickExpectation(1, O);
+    expectScreenToHave(NEXT_PLAYER_X);
+
+    squareOnClickExpectation(2, X);
+    expectScreenToHave(NEXT_PLAYER_O);
+
+    squareOnClickExpectation(3, O);
+    expectScreenToHave(NEXT_PLAYER_X);
+
+    squareOnClickExpectation(4, X);
+    expectScreenToHave(NEXT_PLAYER_O);
+
+    squareOnClickExpectation(6, O);
+    expectScreenToHave(NEXT_PLAYER_X);
+
+    squareOnClickExpectation(7, X);
+    expectScreenToHave(NEXT_PLAYER_O);
+
+    squareOnClickExpectation(8, O);
+    expectScreenToHave(NEXT_PLAYER_X);
+
+    squareOnClickExpectation(5, X);
+    expectScreenToHave(TIED);
   });
 });
 

@@ -2,7 +2,9 @@ import { useState } from 'react';
 import Square from './Square';
 
 const hasPlayerMatchedWinningIndices = (squares) => {
-  if (squares.length >= 5) {
+  const validSquaresLength = squares.filter(Boolean).length;
+
+  if (validSquaresLength >= 5) {
     const winningIndices = [
       [0, 1, 2],
       [3, 4, 5],
@@ -18,28 +20,28 @@ const hasPlayerMatchedWinningIndices = (squares) => {
       const [a, b, c] = winningIndices[i];
 
       if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-        return squares[a];
+        return `Winner: ${squares[a]}`;
       }
     }
   }
 
-  return null;
+  return validSquaresLength === 9 ? `Match Tied` : null;
 }
 
 const Board = () => {
   const [squares, setSquares] = useState(Array(9).fill(null));
   const [isXCurrentPlayer, setIsXCurrentPlayer] = useState(true);
-  const [winner, setWinner] = useState(null);
+  const [result, setResult] = useState(null);
 
   const squareOnClickHandler = (i) => () => {
     const newSquares = squares;
 
-    if (!newSquares[i] && !winner) {
+    if (!newSquares[i] && !result) {
       newSquares[i] = currentPlayer();
 
       setSquares(newSquares);
       setIsXCurrentPlayer(!isXCurrentPlayer);
-      setWinner(hasPlayerMatchedWinningIndices(newSquares))
+      setResult(hasPlayerMatchedWinningIndices(newSquares))
     }
   }
 
@@ -60,8 +62,7 @@ const Board = () => {
 
       <div className="next-player">
         {
-          winner ?
-            `Winner: ${winner}` :
+          result ? result :
             `Player to Play: ${currentPlayer()}`
         }
       </div>
