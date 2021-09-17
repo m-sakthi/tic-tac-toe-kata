@@ -1,8 +1,13 @@
 import { render, screen, fireEvent, queryByAttribute, within } from '@testing-library/react';
 import Board from './Board';
 
+let board;
+const X = 'X';
+const O = 'O';
+const NEXT_PLAYER_X = /Player to Play: X/;
+const NEXT_PLAYER_O = /Player to Play: O/;
+
 describe('Board component', () => {
-  let board;
 
   beforeEach(() => {
     board = render(<Board />);
@@ -13,34 +18,35 @@ describe('Board component', () => {
   });
 
   it('should render Player to Play as X initially', () => {
-    expect(screen.getByText(/Player to Play: X/i)).toBeInTheDocument();
+    expectScreenToHave(NEXT_PLAYER_X);
   });
 
   it('should render Reset Game button', () => {
     expect(screen.getByTestId('reset-btn')).toBeInTheDocument();
-    expect(screen.getByText(/Reset Game/i)).toBeInTheDocument();
+    expectScreenToHave(/Reset Game/i);
   });
 
   it('should assign X when one of the Squares is clicked first', () => {
-    const firstBtn = board.getByTestId('square-1');
-
-    fireEvent.click(firstBtn);
-    within(firstBtn).getByText('X');
-
-    expect(screen.getByText(/Player to Play: O/i)).toBeInTheDocument();
+    squareOnClickExpectation(1, X);
+    expectScreenToHave(NEXT_PLAYER_O);
   });
 
-  it('should assign X and O reqpextively any two of the Squares is clicked one after another', () => {
-    const firstBtn = board.getByTestId('square-1');
+  it('should assign X and O respectively any two of the Squares is clicked one after another', () => {
+    squareOnClickExpectation(1, X);
+    expectScreenToHave(NEXT_PLAYER_O);
 
-    fireEvent.click(firstBtn);
-    within(firstBtn).getByText('X');
-    expect(screen.getByText(/Player to Play: O/i)).toBeInTheDocument();
-
-    const secondBtn = board.getByTestId('square-2');
-
-    fireEvent.click(secondBtn);
-    within(secondBtn).getByText('O');
-    expect(screen.getByText(/Player to Play: X/i)).toBeInTheDocument();
+    squareOnClickExpectation(2, O);
+    expectScreenToHave(NEXT_PLAYER_X);
   })
 });
+
+const squareOnClickExpectation = (id, expectedTxt) => {
+  const square = board.getByTestId(`square-${id}`);
+
+  fireEvent.click(square);
+  within(square).getByText(expectedTxt);
+}
+
+const expectScreenToHave = (regex) => {
+  expect(screen.getByText(regex)).toBeInTheDocument();
+}

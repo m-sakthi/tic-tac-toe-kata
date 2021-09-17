@@ -2,18 +2,18 @@ import { useState } from 'react';
 import Square from './Square';
 
 const Board = () => {
-  const [currentPlayer, setCurrentPlayer] = useState('X');
   const [squares, setSquares] = useState(Array(9).fill(null));
+  const [isXCurrentPlayer, setIsXCurrentPlayer] = useState(true);
 
   const squareOnClickHandler = (i) => () => {
     const newSquares = squares;
-    newSquares[i] = currentPlayer;
+    newSquares[i] = currentPlayer();
 
-    setSquares(squares);
-    setCurrentPlayer(switchCurrentPlayer());
+    setSquares(newSquares);
+    setIsXCurrentPlayer(!isXCurrentPlayer);
   }
 
-  const switchCurrentPlayer = () => currentPlayer === 'X' ? 'O' : 'X';
+  const currentPlayer = () => isXCurrentPlayer ? 'X' : 'O';
 
   return (
     <div className="container">
@@ -29,7 +29,7 @@ const Board = () => {
       </div>
 
       <div className="next-player">
-        Player to Play: {currentPlayer}
+        Player to Play: {currentPlayer()}
       </div>
       <button data-testid="reset-btn" className="reset-btn">
         Reset Game
